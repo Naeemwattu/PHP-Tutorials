@@ -17,7 +17,7 @@ else{
 }
 
 
-$sql="DELETE FROM `form` WHERE `form`.`Subject` = 'BS-BOTONY'";
+$sql="DELETE FROM `form` WHERE `form`.`Subjectxa` = 'BS-BOTONY'";
 $result=mysqli_query($conn,$sql);
 
 $aff = mysqli_affected_rows($conn);
