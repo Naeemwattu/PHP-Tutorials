@@ -1,4 +1,6 @@
 <?php
+
+$insert= false;
 // Connecting to the DataBase
 $servername= 'localhost';
 $username='root';
@@ -15,6 +17,20 @@ if(!$conn){
 // else{
 //     echo"Connection was Successfully";
 // }
+
+if{$_server['REQUEST_METHOD']=='POST'}
+$title = $_POST['title']
+$desc = $_POST['desc']
+
+$sql= "INSERT INTO `inotes` (`title`, `desc`) VALUES ('$title', '$desc')";
+$result = mysqli_query($conn,$sql);
+
+if($result){
+  // echo "The record has been inserted Successfully! <br>"
+  $insert = true;
+}else{
+  echo "The record was not inserted Successfully Because of this error" . mysqli_error($conn);
+}
 ?>
 
 <!doctype html>
@@ -73,6 +89,15 @@ if(!$conn){
     </div>
   </nav>
 
+  <?php
+    if($insert){
+      echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+      <strong>Success!</strong> The record has been inserted Successfully.
+      <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>"
+    };
+  ?>
+
 
   <div class="container my-4">
     <h2>Fill in the iNotes</h2>
@@ -90,19 +115,31 @@ if(!$conn){
   </div>
 
   <div class="container">
-    <?php
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Title</th>
+          <th scope="col">Descriptions</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
         $sql = "SELECT * FROM `inotes`";
         $result= mysqli_query($conn, $sql);
         
         while($row=mysqli_fetch_assoc($result)){
-            echo $row['s no'] . ". Title " . $row['title'] . " desc is " . $row['description'];
-            echo '<br>';
+          echo "<tr>
+            <th scope="row">". $row['s no'] ."</th>
+            <td>". $row['title'] ."</td>
+            <td>". $row['description'] ."</td>
+            <td>Action</td>
+          </tr>";
         }
-
-
-
-
-    ?>
+        ?>
+      </tbody>
+    </table>
   </div>
 
 
